@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(odometry_transformer)
 
+## Use C++14
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Boost REQUIRED COMPONENTS chrono date_time filesystem iostreams)
+find_package(roscpp)
+
 find_package(catkin
   REQUIRED COMPONENTS
   roscpp
@@ -10,9 +17,7 @@ find_package(catkin
   dynamic_reconfigure
   nodelet
   pluginlib
-  )
-
-include_directories(include ${catkin_INCLUDE_DIRS})
+)
 
 #######################
 # DYNAMIC RECONFIGURE #
@@ -20,6 +25,21 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 generate_dynamic_reconfigure_options(cfg/OdometryTransformer.cfg)
 
 catkin_package()
+
+set(catkin_INCLUDE_DIRS ";${catkin_INCLUDE_DIRS}")
+STRING(REGEX REPLACE ";/opt/ros" ";${CMAKE_SYSROOT}/opt/ros" catkin_INCLUDE_DIRS "${catkin_INCLUDE_DIRS}")
+STRING(REGEX REPLACE ";/usr/share" ";${CMAKE_SYSROOT}/usr/share" catkin_INCLUDE_DIRS "${catkin_INCLUDE_DIRS}")
+STRING(REGEX REPLACE ";/usr/include" ";${CMAKE_SYSROOT}/usr/include" catkin_INCLUDE_DIRS "${catkin_INCLUDE_DIRS}")
+
+STRING(REGEX REPLACE ";/opt/ros" ";${CMAKE_SYSROOT}/opt/ros" catkin_LIBRARIES "${catkin_LIBRARIES}")
+STRING(REGEX REPLACE ";/usr/share" ";${CMAKE_SYSROOT}/usr/share" catkin_LIBRARIES "${catkin_LIBRARIES}")
+STRING(REGEX REPLACE ";/usr/include" ";${CMAKE_SYSROOT}/usr/include" catkin_LIBRARIES "${catkin_LIBRARIES}")
+
+message(WARNING "catkin_INCLUDE_DIRS: ${catkin_INCLUDE_DIRS}")
+message(WARNING "catkin_LIBRARIES: ${catkin_LIBRARIES}")
+
+
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
