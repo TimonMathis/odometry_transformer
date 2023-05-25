@@ -35,10 +35,6 @@ STRING(REGEX REPLACE ";/opt/ros" ";${CMAKE_SYSROOT}/opt/ros" catkin_LIBRARIES "$
 STRING(REGEX REPLACE ";/usr/share" ";${CMAKE_SYSROOT}/usr/share" catkin_LIBRARIES "${catkin_LIBRARIES}")
 STRING(REGEX REPLACE ";/usr/include" ";${CMAKE_SYSROOT}/usr/include" catkin_LIBRARIES "${catkin_LIBRARIES}")
 
-message(WARNING "catkin_INCLUDE_DIRS: ${catkin_INCLUDE_DIRS}")
-message(WARNING "catkin_LIBRARIES: ${catkin_LIBRARIES}")
-
-
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 17)
