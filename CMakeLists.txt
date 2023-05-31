@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Boost REQUIRED COMPONENTS chrono date_time filesystem iostreams)
 find_package(roscpp)
+find_package(tf2_geometry_msgs)
+find_package(tf2_ros)
+find_package(geometry_msgs)
 
 find_package(catkin
   REQUIRED COMPONENTS
